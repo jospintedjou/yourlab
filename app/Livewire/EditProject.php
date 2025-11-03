@@ -41,7 +41,8 @@ class EditProject extends Component
     {
         $validated = $this->validate();
         
-        $projectService->updateProject($this->projectId, $validated);
+        $project = Project::findOrFail($this->projectId);
+        $projectService->updateProject($project, $validated);
 
         session()->flash('success', 'Project updated successfully!');
         

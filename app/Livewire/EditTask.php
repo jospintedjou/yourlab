@@ -48,7 +48,8 @@ class EditTask extends Component
     {
         $validated = $this->validate();
         
-        $taskService->updateTask($this->taskId, $validated);
+        $task = Task::findOrFail($this->taskId);
+        $taskService->updateTask($task, $validated);
 
         session()->flash('success', 'Task updated successfully!');
         
