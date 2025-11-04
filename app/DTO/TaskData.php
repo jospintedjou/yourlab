@@ -8,7 +8,7 @@ use App\Enums\TaskPriority;
 class TaskData
 {
     public function __construct(
-        public readonly int $project_id,
+        public readonly ?int $project_id,
         public readonly string $title,
         public readonly ?string $description = null,
         public readonly TaskStatus $status = TaskStatus::TODO,
@@ -20,13 +20,13 @@ class TaskData
     public static function fromArray(array $data): self
     {
         return new self(
-            project_id: $data['project_id'],
+            project_id: $data['project_id'] ?? null,
             title: $data['title'],
             description: $data['description'] ?? null,
             status: isset($data['status']) ? TaskStatus::from($data['status']) : TaskStatus::TODO,
             priority: isset($data['priority']) ? TaskPriority::from($data['priority']) : null,
             due_date: $data['due_date'] ?? null,
-            assigned_to: $data['assigned_to'] ?? null,
+            assigned_to: isset($data['assigned_to']) ? (int) $data['assigned_to'] : null,
         );
     }
 

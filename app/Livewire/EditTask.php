@@ -20,7 +20,7 @@ class EditTask extends Component
     public $status = 'todo';
     public $priority = 'medium';
     public $due_date = '';
-    public $assigned_to = '';
+    public $assigned_to = null;
     public $tenantId;
 
     protected function rules()
