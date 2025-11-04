@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ProjectStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateProjectRequest extends FormRequest
 {
@@ -26,7 +28,7 @@ class UpdateProjectRequest extends FormRequest
             'description' => 'nullable|string',
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
-            'status' => 'required|in:draft,active,completed',
+            'status' => ['required', Rule::enum(ProjectStatus::class)],
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace App\DTO;
 
+use App\Enums\ProjectStatus;
+
 class ProjectData
 {
     public function __construct(
@@ -9,7 +11,7 @@ class ProjectData
         public readonly ?string $description = null,
         public readonly ?string $start_date = null,
         public readonly ?string $end_date = null,
-        public readonly string $status = 'draft',
+        public readonly ProjectStatus $status = ProjectStatus::DRAFT,
     ) {}
 
     public static function fromArray(array $data): self
@@ -19,7 +21,7 @@ class ProjectData
             description: $data['description'] ?? null,
             start_date: $data['start_date'] ?? null,
             end_date: $data['end_date'] ?? null,
-            status: $data['status'] ?? 'draft',
+            status: isset($data['status']) ? ProjectStatus::from($data['status']) : ProjectStatus::DRAFT,
         );
     }
 
@@ -30,7 +32,7 @@ class ProjectData
             'description' => $this->description,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date,
-            'status' => $this->status,
+            'status' => $this->status->value,
         ];
     }
 }
