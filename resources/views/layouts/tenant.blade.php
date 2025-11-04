@@ -38,13 +38,13 @@
                     
                     <div class="hidden md:flex space-x-1">
                         <a href="{{ route('tenant.dashboard', ['tenant' => tenant('id')]) }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('tenant.dashboard') ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100' }}">
-                            Dashboard
+                            Tableau de bord
                         </a>
                         <a href="{{ route('tenant.projects.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('tenant.projects.*') ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100' }}">
-                            Projects
+                            Projets
                         </a>
                         <a href="{{ route('tenant.tasks.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('tenant.tasks.*') ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100' }}">
-                            Tasks
+                            Tâches
                         </a>
                     </div>
                 </div>
@@ -75,12 +75,12 @@
                              style="display: none;">
                             <div class="py-1">
                                 <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                    Profile
+                                    Profil
                                 </a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                        Log Out
+                                        Déconnexion
                                     </button>
                                 </form>
                             </div>

@@ -6,10 +6,10 @@
 <div>
     <!-- Breadcrumbs -->
     <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
-        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
         </svg>
-        <span class="font-medium text-gray-900">Tableau de bord</span>
+        <span class="ml-1 font-medium text-gray-900">Tableau de bord</span>
     </nav>
 
     <h1 class="text-3xl font-bold text-gray-900 mb-8">Tableau de bord</h1>

@@ -27,14 +27,17 @@
         </script>
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
+        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-cover bg-center bg-no-repeat relative" style="background-image: url('{{ asset('img/bg-img.png') }}');">
+            <!-- Overlay for better readability -->
+            <div class="absolute inset-0 bg-white/10"></div>
+            
+            <div class="relative z-10">
                 <a href="/">
-                    <x-application-logo class="w-24 h-24 fill-current text-gray-500" />
+                    <img src="{{ asset('img/logo-yourlab-transparent.png') }}" alt="YourLab Logo" class="w-32 h-32 drop-shadow-2xl mx-auto">
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-xl mt-6 px-8 py-8 bg-white shadow-lg overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-xl mt-6 px-8 py-8 bg-white shadow-2xl overflow-hidden sm:rounded-lg relative z-10">
                 {{ $slot }}
             </div>
         </div>
