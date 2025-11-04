@@ -32,10 +32,8 @@
             <div class="flex justify-between h-16">
                 <div class="flex items-center space-x-8">
                     <a href="{{ route('organizations.index') }}" class="flex items-center">
-                        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
-                        </svg>
-                        <span class="ml-2 text-xl font-semibold text-gray-900">{{ tenant('name') }}</span>
+                        <img src="{{ asset('img/logo-yourlab-transparent.png') }}" alt="YourLab Logo" class="h-10 w-auto">
+                        <span class="ml-3 text-xl font-semibold text-gray-900">{{ tenant('name') }}</span>
                     </a>
                     
                     <div class="hidden md:flex space-x-1">
@@ -57,6 +55,9 @@
                     <!-- User Dropdown -->
                     <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                         <button @click="open = !open" class="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none transition">
+                            <svg class="h-5 w-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                            </svg>
                             <span>{{ Auth::user()->name }}</span>
                             <svg class="h-4 w-4" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>

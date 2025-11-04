@@ -5,6 +5,10 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Services\TaskService;
 use App\Models\Project;
+use App\Enums\TaskStatus;
+use App\Enums\TaskPriority;
+use App\DTO\TaskData;
+use Illuminate\Validation\Rule;
 
 class CreateTask extends Component
 {
@@ -17,15 +21,18 @@ class CreateTask extends Component
     public $assigned_to = '';
     public $tenantId;
 
-    protected $rules = [
-        'project_id' => 'required|exists:projects,id',
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'status' => 'required|in:todo,in_progress,done',
-        'priority' => 'required|in:low,medium,high',
-        'due_date' => 'nullable|date',
-        'assigned_to' => 'nullable|exists:users,id',
-    ];
+    protected function rules()
+    {
+        return [
+            'project_id' => 'required|exists:projects,id',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => ['required', Rule::enum(TaskStatus::class)],
+            'priority' => ['required', Rule::enum(TaskPriority::class)],
+            'due_date' => 'nullable|date',
+            'assigned_to' => 'nullable|exists:users,id',
+        ];
+    }
 
     public function mount()
     {
@@ -36,9 +43,10 @@ class CreateTask extends Component
     {
         $validated = $this->validate();
         
-        $taskService->createTask($validated);
+        $taskData = TaskData::fromArray($validated);
+        $taskService->createTask($taskData);
 
-        session()->flash('success', 'Task created successfully!');
+        session()->flash('success', 'Tâche créée avec succès !');
         
         return redirect()->route('tenant.tasks.index', ['tenant' => $this->tenantId]);
     }

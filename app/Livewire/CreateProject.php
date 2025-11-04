@@ -4,6 +4,9 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Services\ProjectService;
+use App\Enums\ProjectStatus;
+use App\DTO\ProjectData;
+use Illuminate\Validation\Rule;
 
 class CreateProject extends Component
 {
@@ -14,13 +17,16 @@ class CreateProject extends Component
     public $status = 'draft';
     public $tenantId;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'start_date' => 'nullable|date',
-        'end_date' => 'nullable|date|after_or_equal:start_date',
-        'status' => 'required|in:draft,active,completed',
-    ];
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'status' => ['required', Rule::enum(ProjectStatus::class)],
+        ];
+    }
 
     public function mount()
     {
@@ -31,9 +37,10 @@ class CreateProject extends Component
     {
         $validated = $this->validate();
         
-        $projectService->createProject($validated);
+        $projectData = ProjectData::fromArray($validated);
+        $projectService->createProject($projectData);
 
-        session()->flash('success', 'Project created successfully!');
+        session()->flash('success', 'Projet créé avec succès !');
         
         return redirect()->route('tenant.projects.index', ['tenant' => $this->tenantId]);
     }

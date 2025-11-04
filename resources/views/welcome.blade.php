@@ -27,20 +27,20 @@
             <div class="mb-8 flex justify-center">
                 <img src="{{ asset('img/logo-yourlab-transparent.png') }}" alt="YourLab Logo" class="h-48 w-auto drop-shadow-2xl">
             </div>
-            <h1 class="text-4xl font-bold text-gray-900 mb-8 drop-shadow-lg">Welcome to YourLab</h1>
-            <p class="text-lg text-gray-900 mb-8 drop-shadow-md">Organize your projects efficiently</p>
+            <h1 class="text-4xl font-bold text-gray-900 mb-8 drop-shadow-lg">Bienvenue sur YourLab</h1>
+            <p class="text-lg text-gray-900 mb-8 drop-shadow-md">Organisez vos projets efficacement</p>
             
             <div class="space-x-4">
                 @auth
                     <a href="{{ route('organizations.index') }}" class="inline-block bg-[#358fbc] text-white px-6 py-3 rounded-lg hover:bg-[#2a7199] transition shadow-lg">
-                        Go to Dashboard
+                        Accéder au tableau de bord
                     </a>
                 @else
                     <a href="{{ route('login') }}" class="inline-block bg-[#358fbc] text-white px-6 py-3 rounded-lg hover:bg-[#2a7199] transition shadow-lg">
-                        Login
+                        Connexion
                     </a>
                     <a href="{{ route('register') }}" class="inline-block bg-white text-gray-800 px-6 py-3 rounded-lg hover:bg-gray-100 transition shadow-lg">
-                        Sign Up
+                        S'inscrire
                     </a>
                 @endauth
             </div>

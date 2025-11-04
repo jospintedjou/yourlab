@@ -5,6 +5,9 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Services\ProjectService;
 use App\Models\Project;
+use App\Enums\ProjectStatus;
+use App\DTO\ProjectData;
+use Illuminate\Validation\Rule;
 
 class EditProject extends Component
 {
@@ -16,13 +19,16 @@ class EditProject extends Component
     public $status = 'draft';
     public $tenantId;
 
-    protected $rules = [
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'start_date' => 'nullable|date',
-        'end_date' => 'nullable|date|after_or_equal:start_date',
-        'status' => 'required|in:draft,active,completed',
-    ];
+    protected function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
+            'status' => ['required', Rule::enum(ProjectStatus::class)],
+        ];
+    }
 
     public function mount($projectId)
     {
@@ -32,9 +38,9 @@ class EditProject extends Component
         $project = Project::findOrFail($projectId);
         $this->name = $project->name;
         $this->description = $project->description;
-        $this->start_date = $project->start_date;
-        $this->end_date = $project->end_date;
-        $this->status = $project->status;
+        $this->start_date = $project->start_date ? $project->start_date->format('Y-m-d') : '';
+        $this->end_date = $project->end_date ? $project->end_date->format('Y-m-d') : '';
+        $this->status = $project->status->value;
     }
 
     public function update(ProjectService $projectService)
@@ -42,9 +48,10 @@ class EditProject extends Component
         $validated = $this->validate();
         
         $project = Project::findOrFail($this->projectId);
-        $projectService->updateProject($project, $validated);
+        $projectData = ProjectData::fromArray($validated);
+        $projectService->updateProject($project, $projectData);
 
-        session()->flash('success', 'Project updated successfully!');
+        session()->flash('success', 'Projet mis à jour avec succès !');
         
         return redirect()->route('tenant.projects.index', ['tenant' => $this->tenantId]);
     }

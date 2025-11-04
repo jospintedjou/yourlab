@@ -6,6 +6,10 @@ use Livewire\Component;
 use App\Services\TaskService;
 use App\Models\Task;
 use App\Models\Project;
+use App\Enums\TaskStatus;
+use App\Enums\TaskPriority;
+use App\DTO\TaskData;
+use Illuminate\Validation\Rule;
 
 class EditTask extends Component
 {
@@ -19,15 +23,18 @@ class EditTask extends Component
     public $assigned_to = '';
     public $tenantId;
 
-    protected $rules = [
-        'project_id' => 'required|exists:projects,id',
-        'title' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'status' => 'required|in:todo,in_progress,done',
-        'priority' => 'required|in:low,medium,high',
-        'due_date' => 'nullable|date',
-        'assigned_to' => 'nullable|exists:users,id',
-    ];
+    protected function rules()
+    {
+        return [
+            'project_id' => 'required|exists:projects,id',
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'status' => ['required', Rule::enum(TaskStatus::class)],
+            'priority' => ['required', Rule::enum(TaskPriority::class)],
+            'due_date' => 'nullable|date',
+            'assigned_to' => 'nullable|exists:users,id',
+        ];
+    }
 
     public function mount($taskId)
     {
@@ -38,9 +45,9 @@ class EditTask extends Component
         $this->project_id = $task->project_id;
         $this->title = $task->title;
         $this->description = $task->description;
-        $this->status = $task->status;
-        $this->priority = $task->priority;
-        $this->due_date = $task->due_date;
+        $this->status = $task->status->value;
+        $this->priority = $task->priority?->value ?? 'medium';
+        $this->due_date = $task->due_date ? $task->due_date->format('Y-m-d') : '';
         $this->assigned_to = $task->assigned_to;
     }
 
@@ -49,9 +56,10 @@ class EditTask extends Component
         $validated = $this->validate();
         
         $task = Task::findOrFail($this->taskId);
-        $taskService->updateTask($task, $validated);
+        $taskData = TaskData::fromArray($validated);
+        $taskService->updateTask($task, $taskData);
 
-        session()->flash('success', 'Task updated successfully!');
+        session()->flash('success', 'Tâche mise à jour avec succès !');
         
         return redirect()->route('tenant.tasks.index', ['tenant' => $this->tenantId]);
     }

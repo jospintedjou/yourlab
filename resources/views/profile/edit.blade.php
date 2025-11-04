@@ -2,8 +2,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Profile</h1>
-                <p class="text-gray-600">Manage your account settings and preferences</p>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Profil</h1>
+                <p class="text-gray-600">Gérez les paramètres et préférences de votre compte</p>
             </div>
 
             <div class="space-y-6">
