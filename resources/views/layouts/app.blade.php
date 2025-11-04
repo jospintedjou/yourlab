@@ -18,8 +18,8 @@
                 theme: {
                     extend: {
                         colors: {
-                            primary: '#0052CC',
-                            'primary-hover': '#0065FF',
+                            primary: '#358fbc',
+                            'primary-hover': '#2a7199',
                             sidebar: '#F4F5F7',
                             border: '#DFE1E6',
                         }
@@ -27,6 +27,10 @@
                 }
             }
         </script>
+        
+        <!-- Alpine.js -->
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
