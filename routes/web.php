@@ -13,15 +13,23 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    // Organization management
-    Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
-    Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
-    Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
-    Route::get('/organizations/{tenant}/switch', [OrganizationController::class, 'switch'])->name('organizations.switch');
+    Route::prefix('profile')->name('profile.')
+     ->controller(ProfileController::class)->group(function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::patch('/', 'update')->name('update');
+        Route::delete('/', 'destroy')->name('destroy');
+    });
+    
+    Route::prefix('organizations')->name('organizations.')
+        ->controller(OrganizationController::class)
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/create', 'create')->name('create');
+                Route::post('/', 'store')->name('store');
+                Route::get('/{tenant}/switch', 'switch')->name('switch');
+        });
+
 });
 
 require __DIR__.'/auth.php';
