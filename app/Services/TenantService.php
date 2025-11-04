@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\TenantData;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -11,12 +12,12 @@ class TenantService
     /**
      * Create a new tenant (organization)
      */
-    public function createTenant(array $data, User $user): Tenant
+    public function createTenant(TenantData $data, User $user): Tenant
     {
         // Create tenant
         $tenant = Tenant::create([
-            'id' => Str::slug($data['name']) . '-' . Str::random(6),
-            'name' => $data['name'],
+            'id' => Str::slug($data->name) . '-' . Str::random(6),
+            'name' => $data->name,
         ]);
 
         // Create domain for path-based routing

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
+use App\DTO\TaskData;
 use App\Services\TaskService;
 use App\Services\ProjectService;
 use App\Models\Task;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -36,17 +38,10 @@ class TaskController extends Controller
     /**
      * Store a new task
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
-        $validated = $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:todo,in_progress,done',
-            'assigned_to' => 'nullable|exists:users,id',
-        ]);
-
-        $this->taskService->createTask($validated);
+        $taskData = TaskData::fromArray($request->validated());
+        $this->taskService->createTask($taskData);
 
         return redirect()->route('tenant.tasks.index', ['tenant' => tenant('id')])
             ->with('success', 'Task created successfully!');
@@ -72,17 +67,10 @@ class TaskController extends Controller
     /**
      * Update a task
      */
-    public function update(Request $request, Task $task)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
-        $validated = $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|in:todo,in_progress,done',
-            'assigned_to' => 'nullable|exists:users,id',
-        ]);
-
-        $this->taskService->updateTask($task, $validated);
+        $taskData = TaskData::fromArray($request->validated());
+        $this->taskService->updateTask($task, $taskData);
 
         return redirect()->route('tenant.tasks.index', ['tenant' => tenant('id')])
             ->with('success', 'Task updated successfully!');

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\ProjectData;
 use App\Repositories\ProjectRepository;
 use App\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
@@ -31,23 +32,17 @@ class ProjectService
     /**
      * Create a new project
      */
-    public function createProject(array $data): Project
+    public function createProject(ProjectData $data): Project
     {
-        return $this->projectRepository->create([
-            'name' => $data['name'],
-            'description' => $data['description'] ?? null,
-            'start_date' => $data['start_date'] ?? null,
-            'end_date' => $data['end_date'] ?? null,
-            'status' => $data['status'] ?? 'draft',
-        ]);
+        return $this->projectRepository->create($data->toArray());
     }
 
     /**
      * Update a project
      */
-    public function updateProject(Project $project, array $data): Project
+    public function updateProject(Project $project, ProjectData $data): Project
     {
-        return $this->projectRepository->update($project, $data);
+        return $this->projectRepository->update($project, $data->toArray());
     }
 
     /**

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
+use App\DTO\ProjectData;
 use App\Services\ProjectService;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -33,17 +35,10 @@ class ProjectController extends Controller
     /**
      * Store a new project
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'status' => 'required|in:draft,active,completed',
-        ]);
-
-        $this->projectService->createProject($validated);
+        $projectData = ProjectData::fromArray($request->validated());
+        $this->projectService->createProject($projectData);
 
         return redirect()->route('tenant.projects.index', ['tenant' => tenant('id')])
             ->with('success', 'Project created successfully!');
@@ -68,17 +63,10 @@ class ProjectController extends Controller
     /**
      * Update a project
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'status' => 'required|in:draft,active,completed',
-        ]);
-
-        $this->projectService->updateProject($project, $validated);
+        $projectData = ProjectData::fromArray($request->validated());
+        $this->projectService->updateProject($project, $projectData);
 
         return redirect()->route('tenant.projects.index', ['tenant' => tenant('id')])
             ->with('success', 'Project updated successfully!');

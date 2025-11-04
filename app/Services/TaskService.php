@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTO\TaskData;
 use App\Repositories\TaskRepository;
 use App\Models\Task;
 use App\Models\Project;
@@ -32,23 +33,17 @@ class TaskService
     /**
      * Create a new task
      */
-    public function createTask(array $data): Task
+    public function createTask(TaskData $data): Task
     {
-        return $this->taskRepository->create([
-            'project_id' => $data['project_id'],
-            'title' => $data['title'],
-            'description' => $data['description'] ?? null,
-            'status' => $data['status'] ?? 'todo',
-            'assigned_to' => $data['assigned_to'] ?? null,
-        ]);
+        return $this->taskRepository->create($data->toArray());
     }
 
     /**
      * Update a task
      */
-    public function updateTask(Task $task, array $data): Task
+    public function updateTask(Task $task, TaskData $data): Task
     {
-        return $this->taskRepository->update($task, $data);
+        return $this->taskRepository->update($task, $data->toArray());
     }
 
     /**

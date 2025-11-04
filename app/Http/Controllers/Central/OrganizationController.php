@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Central;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreOrganizationRequest;
+use App\DTO\TenantData;
 use App\Services\TenantService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class OrganizationController extends Controller
@@ -33,13 +34,10 @@ class OrganizationController extends Controller
     /**
      * Store a new organization
      */
-    public function store(Request $request)
+    public function store(StoreOrganizationRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        $tenant = $this->tenantService->createTenant($validated, Auth::user());
+        $tenantData = TenantData::fromArray($request->validated());
+        $tenant = $this->tenantService->createTenant($tenantData, Auth::user());
 
         return redirect()->route('organizations.index')
             ->with('success', 'Organization created successfully!');
