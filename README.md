@@ -1,59 +1,165 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🧪 YourLab - Multi-Tenant Project Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, multi-tenant project and task management application built with Laravel 12, Livewire 3, and Stancl/Tenancy.
 
-## About Laravel
+## ✨ Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- 🏢 **Multi-Tenancy**: Each organization gets isolated data and database
+- 📊 **Project Management**: Create, track, and manage projects with statuses
+- ✅ **Task Management**: Organize tasks with priorities, due dates, and assignments
+- 🎨 **Modern UI**: Built with Tailwind CSS and Alpine.js
+- ⚡ **Real-time Updates**: Livewire for reactive interfaces
+- 🔐 **Authentication**: Laravel Breeze with secure user management
+- 🌍 **Localization**: French language support
+- 🧪 **Fully Tested**: 87 tests with comprehensive coverage
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 Quick Start
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Option 1: Docker
 
-## Learning Laravel
+```bash
+git clone https://github.com/jospintedjou/yourlab.git
+cd yourlab
+cp .env.example .env
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+# Start containers
+docker-compose up -d
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Install dependencies
+docker-compose exec laravel.test composer install
+docker-compose exec laravel.test php artisan key:generate
+docker-compose exec laravel.test php artisan migrate
+docker-compose exec laravel.test php artisan tenants:migrate
 
-## Laravel Sponsors
+# Build assets
+docker-compose exec laravel.test npm install
+docker-compose exec laravel.test npm run build
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Access**: http://localhost  
+📖 **[Full Docker Documentation](DOCKER.md)**
 
-### Premium Partners
+**Optional**: Use `./vendor/bin/sail` as a shortcut for `docker-compose exec laravel.test`
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Option 2: Local Development
 
-## Contributing
+```bash
+git clone https://github.com/jospintedjou/yourlab.git
+cd yourlab
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan tenants:migrate
+npm install && npm run build
+php artisan serve
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🛠️ Tech Stack
 
-## Code of Conduct
+- **Backend**: Laravel 12.x, PHP 8.2+
+- **Frontend**: Livewire 3, Alpine.js 3, Tailwind CSS 3
+- **Database**: MySQL (Docker) / SQLite (Local)
+- **Multi-Tenancy**: Stancl/Tenancy v3.x
+- **Authentication**: Laravel Breeze
+- **Testing**: PHPUnit with 87 tests
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📚 Project Structure
 
-## Security Vulnerabilities
+```
+app/
+├── DTO/              # Data Transfer Objects
+├── Enums/            # Status, Priority enums
+├── Livewire/         # Livewire components
+├── Models/           # Eloquent models
+├── Repositories/     # Data access layer
+└── Services/         # Business logic
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+resources/views/
+├── central/          # Central domain views
+├── livewire/         # Livewire component views
+└── layouts/          # App layouts
 
-## License
+tests/
+├── Feature/          # 72 feature tests
+└── Unit/             # 15 unit tests
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🐳 Docker Commands
+
+```bash
+# Start application
+docker-compose up -d
+
+# Run artisan commands
+docker-compose exec laravel.test php artisan [command]
+
+# Run tests
+docker-compose exec laravel.test php artisan test
+
+# Access shell
+docker-compose exec laravel.test bash
+
+# View logs
+docker-compose logs -f
+
+# Stop containers
+docker-compose down
+```
+
+**Shortcut**: Use `./vendor/bin/sail` instead of `docker-compose exec laravel.test`
+
+See [DOCKER.md](DOCKER.md) for complete Docker documentation.
+
+## 🧪 Testing
+
+```bash
+# Docker
+docker-compose exec laravel.test php artisan test
+
+# Or with Sail shortcut
+./vendor/bin/sail test
+
+# Local
+php artisan test
+
+# Run specific suite
+php artisan test --testsuite=Feature
+
+# With coverage
+php artisan test --coverage
+```
+
+**Test Coverage**: 87 tests, 240 assertions
+- ✅ Unit Tests: Enums, DTOs
+- ✅ Feature Tests: Auth, Projects, Tasks, Tenancy, Livewire Components
+
+## 📖 Additional Documentation
+
+- [Docker Setup](DOCKER.md) - Complete Docker guide
+- [Setup Guide](SETUP_GUIDE.md) - Detailed installation
+- [Commands Reference](COMMANDS.md) - Available artisan commands
+- [Quick Start](QUICK_START.md) - Get started quickly
+- [Tests Documentation](TESTS_DOCUMENTATION.md) - Testing guide
+
+## 🤝 Contributing
+
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests
+5. Submit a pull request
+
+## 📄 License
+
+This project is open-sourced software licensed under the MIT license.
+
+## 🙏 Credits
+
+Built with:
+- [Laravel](https://laravel.com)
+- [Livewire](https://livewire.laravel.com)
+- [Stancl/Tenancy](https://tenancyforlaravel.com)
+- [Tailwind CSS](https://tailwindcss.com)
+
