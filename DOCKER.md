@@ -88,8 +88,8 @@ docker-compose exec laravel.test bash
 # Access MySQL CLI
 docker-compose exec mysql mysql -u sail -p
 
-# Access Redis CLI
-docker-compose exec redis redis-cli
+# Or using Sail
+./vendor/bin/sail mysql
 ```
 
 ### Frontend Development
@@ -189,7 +189,6 @@ If default ports are already in use, change them in `.env`:
 ```env
 APP_PORT=8080              # Change from 80
 FORWARD_DB_PORT=33060      # Change from 3306
-FORWARD_REDIS_PORT=63790   # Change from 6379
 VITE_PORT=5174             # Change from 5173
 ```
 
