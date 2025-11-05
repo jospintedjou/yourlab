@@ -14,4 +14,4 @@ cmds = [
 ]
 
 [start]
-cmd = 'php artisan migrate --force && php artisan db:seed --force && /start-container.sh'
+cmd = 'echo "Running migrations and seeding database ..." && php artisan migrate --force && php artisan db:seed --force && echo "Starting Laravel server ..." && /start-container.sh'
