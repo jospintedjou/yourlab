@@ -13,18 +13,18 @@ class TenantSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::where('email', 'test@example.com')->first();
+        $user = \App\Models\User::where('email', 'test@example.com')->first();
 
-        // Create 5 organizations for the test user
+        // Create 5 organizations
         for ($i = 1; $i <= 5; $i++) {
             $tenant = Tenant::factory()->create([
                 'id' => 'org-' . $i,
             ]);
 
-            // Attach user to tenant
+            // Attach user to organization
             $tenant->users()->attach($user->id);
 
-            $this->command->info("✓ Created organization: {$tenant->name} (org-{$i})");
+            $this->command->info("✓ Created organization: {$tenant->name} ({$tenant->id})");
         }
     }
 }

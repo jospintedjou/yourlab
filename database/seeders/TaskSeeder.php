@@ -15,30 +15,25 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::where('email', 'test@example.com')->first();
+        $user = \App\Models\User::where('email', 'test@example.com')->first();
         $tenants = Tenant::all();
 
         foreach ($tenants as $tenant) {
-            // Initialize tenant context
-            tenancy()->initialize($tenant);
-
-            $projects = Project::all();
+            // Get projects for this tenant (single database, using tenant_id)
+            $projects = Project::where('tenant_id', $tenant->id)->get();
 
             foreach ($projects as $project) {
-                // Create 1 to 5 tasks per project
+                // Create 1-5 random tasks per project
                 $taskCount = rand(1, 5);
-                
+
                 Task::factory($taskCount)->create([
+                    'tenant_id' => $tenant->id,
                     'project_id' => $project->id,
-                    'assigned_to' => fake()->boolean(50) ? $user->id : null,
+                    'assigned_to' => rand(0, 1) ? $user->id : null, // 50% chance of assignment
                 ]);
             }
 
-            $totalTasks = Task::count();
-            $this->command->info("✓ Created {$totalTasks} tasks for {$tenant->name}");
-
-            // End tenant context
-            tenancy()->end();
+            $this->command->info("✓ Created tasks for {$tenant->name}");
         }
     }
 }

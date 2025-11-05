@@ -12,13 +12,9 @@ done
 
 echo "✅ MySQL is ready!"
 
-# Run central database migrations
-echo "📦 Running central database migrations..."
+# Run database migrations (includes both central and tenant tables in single database)
+echo "📦 Running database migrations..."
 php artisan migrate --force
-
-# Run tenant migrations
-echo "🏢 Running tenant migrations..."
-php artisan tenants:migrate --force
 
 # Seed database on first run (creates test data)
 if [ ! -f /var/www/html/storage/.initialized ]; then

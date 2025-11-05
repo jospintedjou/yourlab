@@ -16,16 +16,12 @@ class ProjectSeeder extends Seeder
         $tenants = Tenant::all();
 
         foreach ($tenants as $tenant) {
-            // Initialize tenant context
-            tenancy()->initialize($tenant);
-
-            // Create 5 projects per organization
-            Project::factory(5)->create();
+            // Create 5 projects per organization (single database, using tenant_id)
+            Project::factory(5)->create([
+                'tenant_id' => $tenant->id,
+            ]);
 
             $this->command->info("✓ Created 5 projects for {$tenant->name}");
-
-            // End tenant context
-            tenancy()->end();
         }
     }
 }

@@ -4,7 +4,7 @@ A modern, multi-tenant project and task management application built with Larave
 
 ## ✨ Features
 
-- 🏢 **Multi-Tenancy**: Each organization gets isolated data and database
+- 🏢 **Multi-Tenancy**: Each organization gets isolated data using tenant scoping in a single database
 - 📊 **Project Management**: Create, track, and manage projects with statuses
 - ✅ **Task Management**: Organize tasks with priorities, due dates, and assignments
 - 🎨 **Modern UI**: Built with Tailwind CSS and Alpine.js
@@ -28,8 +28,10 @@ docker-compose up -d
 # Install dependencies
 docker-compose exec laravel.test composer install
 docker-compose exec laravel.test php artisan key:generate
-docker-compose exec laravel.test php artisan migrate
-docker-compose exec laravel.test php artisan tenants:migrate
+
+# Setup database (includes migrations and test data seeding)
+docker-compose exec laravel.test php artisan migrate --force
+docker-compose exec laravel.test php artisan db:seed --force
 
 # Build assets
 docker-compose exec laravel.test npm install
@@ -49,8 +51,8 @@ cd yourlab
 composer install
 cp .env.example .env
 php artisan key:generate
-php artisan migrate
-php artisan tenants:migrate
+php artisan migrate --force
+php artisan db:seed --force
 npm install && npm run build
 php artisan serve
 ```
@@ -63,6 +65,26 @@ php artisan serve
 - **Multi-Tenancy**: Stancl/Tenancy v3.x
 - **Authentication**: Laravel Breeze
 - **Testing**: PHPUnit with 87 tests
+
+## 📦 Key Packages & Architecture Decisions
+
+### Multi-Tenancy
+- **[Stancl/Tenancy](https://tenancyforlaravel.com)** - Domain-based multi-tenancy with single database architecture. Data is isolated by `tenant_id` column, providing simpler setup while maintaining strong tenant separation through global scopes and automatic tenant identification.
+
+### Authentication
+- **[Laravel Breeze](https://laravel.com/docs/starter-kits#laravel-breeze)** - Minimal authentication scaffolding with Blade templates. Chosen for its simplicity and perfect fit for small to medium applications without unnecessary complexity.
+
+### Frontend Stack
+- **[Livewire 3](https://livewire.laravel.com)** - Full-stack framework for building dynamic interfaces without JavaScript frameworks. Enables reactive components with server-side rendering, reducing frontend complexity while maintaining rich interactivity.
+- **[Alpine.js 3](https://alpinejs.dev)** - Lightweight JavaScript framework (15kb) for interactive UI elements, dropdown menus, and animations. Perfect companion to Livewire for client-side interactions.
+- **[Tailwind CSS 3](https://tailwindcss.com)** - Utility-first CSS framework delivered via CDN for rapid UI development without build step overhead during development.
+
+### Development Tools
+- **PHPUnit** - Comprehensive testing framework with 87 tests (15 unit, 72 feature) covering 240 assertions, ensuring code quality and reliability.
+- **Docker** - Containerized development environment using Laravel Sail runtime with MySQL 8.0, providing consistent development setup across teams.
+
+### Database Architecture
+- **Single Database Multi-Tenancy** - All tenants share one MySQL database with data separated by `tenant_id`. Simpler than separate databases, easier to maintain, and sufficient for most use cases with proper tenant scoping.
 
 ## 📚 Project Structure
 
