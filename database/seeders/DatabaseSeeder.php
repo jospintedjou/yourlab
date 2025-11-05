@@ -15,11 +15,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Create test user
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Run specific seeders in order
+        $this->call([
+            TenantSeeder::class,
+            ProjectSeeder::class,
+            TaskSeeder::class,
+        ]);
+
+        $this->command->info('');
+        $this->command->info('🎉 Database seeding completed successfully!');
+        $this->command->info('📧 Login: test@example.com');
+        $this->command->info('🔑 Password: password');
     }
 }

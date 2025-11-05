@@ -20,8 +20,8 @@ php artisan migrate --force
 echo "🏢 Running tenant migrations..."
 php artisan tenants:migrate --force
 
-# Check if we need to seed data
-if [ "$APP_ENV" = "local" ] && [ ! -f /var/www/html/storage/.initialized ]; then
+# Seed database on first run (creates test data)
+if [ ! -f /var/www/html/storage/.initialized ]; then
     echo "🌱 Seeding database (first run)..."
     php artisan db:seed --force
     touch /var/www/html/storage/.initialized
