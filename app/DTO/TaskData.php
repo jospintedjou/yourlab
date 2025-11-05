@@ -15,6 +15,7 @@ class TaskData
         public readonly ?TaskPriority $priority = null,
         public readonly ?string $due_date = null,
         public readonly ?int $assigned_to = null,
+        public readonly ?string $tenant_id = null,
     ) {}
 
     public static function fromArray(array $data): self
@@ -27,12 +28,13 @@ class TaskData
             priority: isset($data['priority']) ? TaskPriority::from($data['priority']) : null,
             due_date: $data['due_date'] ?? null,
             assigned_to: isset($data['assigned_to']) ? (int) $data['assigned_to'] : null,
+            tenant_id: $data['tenant_id'] ?? null,
         );
     }
 
     public function toArray(): array
     {
-        return [
+        return array_filter([
             'project_id' => $this->project_id,
             'title' => $this->title,
             'description' => $this->description,
@@ -40,6 +42,7 @@ class TaskData
             'priority' => $this->priority?->value,
             'due_date' => $this->due_date,
             'assigned_to' => $this->assigned_to,
-        ];
+            'tenant_id' => $this->tenant_id,
+        ], fn($value, $key) => $value !== null || $key === 'assigned_to', ARRAY_FILTER_USE_BOTH);
     }
 }

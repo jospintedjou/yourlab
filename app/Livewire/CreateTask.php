@@ -43,6 +43,9 @@ class CreateTask extends Component
     {
         $validated = $this->validate();
         
+        // Explicitly add tenant_id for single database multi-tenancy
+        $validated['tenant_id'] = $this->tenantId;
+        
         $taskData = TaskData::fromArray($validated);
         $taskService->createTask($taskData);
 

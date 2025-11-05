@@ -79,7 +79,7 @@
                 Mettre à jour la tâche
             </button>
             <a href="{{ route('tenant.tasks.index', ['tenant' => $tenantId]) }}" class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition">
-                Cancel
+                Annuler
             </a>
         </div>
     </form>

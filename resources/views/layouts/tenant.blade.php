@@ -37,13 +37,13 @@
                     </a>
                     
                     <div class="hidden md:flex space-x-1">
-                        <a href="{{ route('tenant.dashboard', ['tenant' => tenant('id')]) }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('tenant.dashboard') ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <a href="{{ route('tenant.dashboard', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.dashboard') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
                             Tableau de bord
                         </a>
-                        <a href="{{ route('tenant.projects.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('tenant.projects.*') ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <a href="{{ route('tenant.projects.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.projects.*') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
                             Projets
                         </a>
-                        <a href="{{ route('tenant.tasks.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('tenant.tasks.*') ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-100' }}">
+                        <a href="{{ route('tenant.tasks.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.tasks.*') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
                             Tâches
                         </a>
                     </div>

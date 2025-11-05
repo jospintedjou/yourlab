@@ -29,6 +29,15 @@ class TaskRepository
      */
     public function create(array $data): Task
     {
+        // Ensure tenant_id is set for single database multi-tenancy
+        if (!isset($data['tenant_id'])) {
+            if (tenancy()->initialized) {
+                $data['tenant_id'] = tenant('id');
+            } else {
+                throw new \Exception('Tenant context is not initialized. Cannot create task without tenant_id.');
+            }
+        }
+        
         return Task::create($data);
     }
 

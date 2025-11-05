@@ -28,6 +28,15 @@ class ProjectRepository
      */
     public function create(array $data): Project
     {
+        // Ensure tenant_id is set for single database multi-tenancy
+        if (!isset($data['tenant_id'])) {
+            if (tenancy()->initialized) {
+                $data['tenant_id'] = tenant('id');
+            } else {
+                throw new \Exception('Tenant context is not initialized. Cannot create project without tenant_id.');
+            }
+        }
+        
         return Project::create($data);
     }
 

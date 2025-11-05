@@ -55,6 +55,9 @@ class EditTask extends Component
     {
         $validated = $this->validate();
         
+        // Explicitly add tenant_id for single database multi-tenancy
+        $validated['tenant_id'] = $this->tenantId;
+        
         $task = Task::findOrFail($this->taskId);
         $taskData = TaskData::fromArray($validated);
         $taskService->updateTask($task, $taskData);

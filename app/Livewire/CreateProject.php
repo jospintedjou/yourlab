@@ -37,6 +37,9 @@ class CreateProject extends Component
     {
         $validated = $this->validate();
         
+        // Explicitly add tenant_id for single database multi-tenancy
+        $validated['tenant_id'] = $this->tenantId;
+        
         $projectData = ProjectData::fromArray($validated);
         $projectService->createProject($projectData);
 

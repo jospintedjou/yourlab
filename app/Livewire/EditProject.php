@@ -47,6 +47,9 @@ class EditProject extends Component
     {
         $validated = $this->validate();
         
+        // Explicitly add tenant_id for single database multi-tenancy
+        $validated['tenant_id'] = $this->tenantId;
+        
         $project = Project::findOrFail($this->projectId);
         $projectData = ProjectData::fromArray($validated);
         $projectService->updateProject($project, $projectData);
