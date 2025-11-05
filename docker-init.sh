@@ -16,11 +16,8 @@ echo "✅ MySQL is ready!"
 echo "📦 Running database migrations..."
 php artisan migrate --force
 
-# Seed database on first run (creates test data)
-if [ ! -f /var/www/html/storage/.initialized ]; then
-    echo "🌱 Seeding database (first run)..."
-    php artisan db:seed --force
-    touch /var/www/html/storage/.initialized
-fi
+# Seed database if no tenants exist (intelligent check)
+echo "🔍 Checking if database needs seeding..."
+php artisan db:seed --force
 
 echo "✨ YourLab is ready!"
