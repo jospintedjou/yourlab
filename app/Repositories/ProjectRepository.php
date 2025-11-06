@@ -64,4 +64,20 @@ class ProjectRepository
     {
         return Project::where('status', $status)->with('tasks')->latest()->get();
     }
+
+    /**
+     * Count all projects
+     */
+    public function count(): int
+    {
+        return Project::count();
+    }
+
+    /**
+     * Get recent projects
+     */
+    public function getRecent(int $limit = 5): Collection
+    {
+        return Project::latest()->take($limit)->get();
+    }
 }

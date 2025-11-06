@@ -90,4 +90,28 @@ class TaskRepository
             ->latest()
             ->get();
     }
+
+    /**
+     * Count tasks by status
+     */
+    public function countByStatus(string $status): int
+    {
+        return Task::where('status', $status)->count();
+    }
+
+    /**
+     * Count tasks by multiple statuses
+     */
+    public function countByStatuses(array $statuses): int
+    {
+        return Task::whereIn('status', $statuses)->count();
+    }
+
+    /**
+     * Get recent tasks
+     */
+    public function getRecent(int $limit = 5): Collection
+    {
+        return Task::with('project')->latest()->take($limit)->get();
+    }
 }

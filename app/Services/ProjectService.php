@@ -60,4 +60,20 @@ class ProjectService
     {
         return $this->projectRepository->getByStatus($status);
     }
+
+    /**
+     * Get total projects count
+     */
+    public function getTotalProjectsCount(): int
+    {
+        return $this->projectRepository->count();
+    }
+
+    /**
+     * Get recent projects
+     */
+    public function getRecentProjects(int $limit = 5): Collection
+    {
+        return $this->projectRepository->getRecent($limit);
+    }
 }

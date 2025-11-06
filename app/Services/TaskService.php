@@ -77,4 +77,28 @@ class TaskService
     {
         return $this->taskRepository->getByAssignedUser($userId);
     }
+
+    /**
+     * Get active tasks count
+     */
+    public function getActiveTasksCount(array $statuses): int
+    {
+        return $this->taskRepository->countByStatuses($statuses);
+    }
+
+    /**
+     * Get completed tasks count
+     */
+    public function getCompletedTasksCount(string $status): int
+    {
+        return $this->taskRepository->countByStatus($status);
+    }
+
+    /**
+     * Get recent tasks
+     */
+    public function getRecentTasks(int $limit = 5): Collection
+    {
+        return $this->taskRepository->getRecent($limit);
+    }
 }
