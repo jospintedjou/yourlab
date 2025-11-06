@@ -40,9 +40,9 @@
             <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
             <select wire:model="status" id="status" 
                 class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('status') border-red-500 @enderror">
-                <option value="todo">À faire</option>
-                <option value="in_progress">En cours</option>
-                <option value="done">Terminée</option>
+                @foreach($statuses as $statusOption)
+                    <option value="{{ $statusOption->value }}">{{ $statusOption->label() }}</option>
+                @endforeach
             </select>
             @error('status')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -54,15 +54,14 @@
             <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priorité</label>
             <select wire:model="priority" id="priority" 
                 class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('priority') border-red-500 @enderror">
-                <option value="low">Basse</option>
-                <option value="medium">Moyenne</option>
-                <option value="high">Haute</option>
+                @foreach($priorities as $priorityOption)
+                    <option value="{{ $priorityOption->value }}">{{ $priorityOption->label() }}</option>
+                @endforeach
             </select>
             @error('priority')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>
-
         <!-- Due Date -->
         <div class="mb-6">
             <label for="due_date" class="block text-sm font-medium text-gray-700 mb-2">Date d'échéance (Optionnel)</label>

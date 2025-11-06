@@ -18,17 +18,17 @@
             <div class="w-40">
                 <select wire:model.live="statusFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Tous les statuts</option>
-                    <option value="todo">À faire</option>
-                    <option value="in_progress">En cours</option>
-                    <option value="done">Terminée</option>
+                    @foreach($statuses as $status)
+                        <option value="{{ $status->value }}">{{ $status->label() }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="w-40">
                 <select wire:model.live="priorityFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Toutes priorités</option>
-                    <option value="low">Basse</option>
-                    <option value="medium">Moyenne</option>
-                    <option value="high">Haute</option>
+                    @foreach($priorities as $priority)
+                        <option value="{{ $priority->value }}">{{ $priority->label() }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

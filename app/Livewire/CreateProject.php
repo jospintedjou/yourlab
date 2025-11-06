@@ -50,6 +50,8 @@ class CreateProject extends Component
 
     public function render()
     {
-        return view('livewire.create-project');
+        return view('livewire.create-project', [
+            'statuses' => ProjectStatus::cases()
+        ]);
     }
 }

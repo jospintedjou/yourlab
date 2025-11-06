@@ -42,9 +42,9 @@
             <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Statut *</label>
             <select wire:model="status" id="status" 
                 class="w-full px-4 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary @error('status') border-red-500 @enderror">
-                <option value="draft">Brouillon</option>
-                <option value="active">Actif</option>
-                <option value="completed">Terminé</option>
+                @foreach($statuses as $statusOption)
+                    <option value="{{ $statusOption->value }}">{{ $statusOption->label() }}</option>
+                @endforeach
             </select>
             @error('status')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

@@ -59,7 +59,9 @@ class CreateTask extends Component
         $projects = Project::all();
         
         return view('livewire.create-task', [
-            'projects' => $projects
+            'projects' => $projects,
+            'statuses' => TaskStatus::cases(),
+            'priorities' => TaskPriority::cases()
         ]);
     }
 }

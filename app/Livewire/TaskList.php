@@ -5,6 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Task;
+use App\Enums\TaskStatus;
+use App\Enums\TaskPriority;
 
 class TaskList extends Component
 {
@@ -78,7 +80,9 @@ class TaskList extends Component
             ->paginate($this->perPage);
 
         return view('livewire.task-list', [
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'statuses' => TaskStatus::cases(),
+            'priorities' => TaskPriority::cases()
         ]);
     }
 }

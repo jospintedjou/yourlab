@@ -18,9 +18,9 @@
             <div class="w-48">
                 <select wire:model.live="statusFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="">Tous les statuts</option>
-                    <option value="draft">Brouillon</option>
-                    <option value="active">Actif</option>
-                    <option value="completed">Terminé</option>
+                    @foreach($statuses as $status)
+                        <option value="{{ $status->value }}">{{ $status->label() }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

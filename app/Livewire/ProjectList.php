@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Project;
+use App\Enums\ProjectStatus;
 
 class ProjectList extends Component
 {
@@ -69,7 +70,8 @@ class ProjectList extends Component
             ->paginate($this->perPage);
 
         return view('livewire.project-list', [
-            'projects' => $projects
+            'projects' => $projects,
+            'statuses' => ProjectStatus::cases()
         ]);
     }
 }
