@@ -31,7 +31,7 @@
         <div class="mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center space-x-8">
-                    <a wire:navigate href="{{ route('organizations.index') }}" class="flex items-center">
+                    <a href="{{ route('organizations.index') }}" class="flex items-center">
                         <img src="{{ asset('img/logo-yourlab-transparent.png') }}" alt="YourLab Logo" class="h-10 w-auto">
                         <span class="ml-3 text-xl font-semibold text-gray-900">{{ tenant('name') }}</span>
                     </a>
