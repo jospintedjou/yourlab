@@ -10,7 +10,7 @@
         <div class="py-2">
             <div class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase">Vos organisations</div>
             @forelse($organizations as $org)
-                <a href="{{ route('tenant.dashboard', ['tenant' => $org->id]) }}" class="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center justify-between block">
+                <a wire:navigate href="{{ route('tenant.dashboard', ['tenant' => $org->id]) }}" class="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center justify-between block">
                     <span class="text-sm text-gray-700">{{ $org->name }}</span>
                     @if(tenancy()->initialized && tenant('id') === $org->id)
                         <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 20 20">

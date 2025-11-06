@@ -31,19 +31,19 @@
         <div class="mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center space-x-8">
-                    <a href="{{ route('organizations.index') }}" class="flex items-center">
+                    <a wire:navigate href="{{ route('organizations.index') }}" class="flex items-center">
                         <img src="{{ asset('img/logo-yourlab-transparent.png') }}" alt="YourLab Logo" class="h-10 w-auto">
                         <span class="ml-3 text-xl font-semibold text-gray-900">{{ tenant('name') }}</span>
                     </a>
                     
                     <div class="hidden md:flex space-x-1">
-                        <a href="{{ route('tenant.dashboard', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.dashboard') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
+                        <a wire:navigate href="{{ route('tenant.dashboard', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.dashboard') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
                             Tableau de bord
                         </a>
-                        <a href="{{ route('tenant.projects.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.projects.*') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
+                        <a wire:navigate href="{{ route('tenant.projects.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.projects.*') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
                             Projets
                         </a>
-                        <a href="{{ route('tenant.tasks.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.tasks.*') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
+                        <a wire:navigate href="{{ route('tenant.tasks.index', ['tenant' => tenant('id')]) }}" class="px-3 py-2 text-sm font-medium {{ request()->routeIs('tenant.tasks.*') ? 'text-primary border-b-2 border-primary' : 'text-gray-700 hover:text-primary hover:border-b-2 hover:border-gray-300' }}">
                             Tâches
                         </a>
                     </div>
