@@ -20,56 +20,63 @@
             @enderror
         </div>
 
-        <!-- Project -->
-        <div class="mb-6">
-            <label for="project_id" class="block text-sm font-medium text-gray-700 mb-2">Projet</label>
-            <select wire:model="project_id" id="project_id" 
-                class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('project_id') border-red-500 @enderror">
-                <option value="">Sélectionner un projet</option>
-                @foreach($projects as $project)
-                    <option value="{{ $project->id }}">{{ $project->name }}</option>
-                @endforeach
-            </select>
-            @error('project_id')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
+        <!-- Project and Due Date -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Project -->
+            <div>
+                <label for="project_id" class="block text-sm font-medium text-gray-700 mb-2">Projet</label>
+                <select wire:model="project_id" id="project_id" 
+                    class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('project_id') border-red-500 @enderror">
+                    <option value="">Sélectionner un projet</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->name }}</option>
+                    @endforeach
+                </select>
+                @error('project_id')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Due Date -->
+            <div>
+                <label for="due_date" class="block text-sm font-medium text-gray-700 mb-2">Date d'échéance</label>
+                <input type="date" wire:model="due_date" id="due_date" 
+                    class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('due_date') border-red-500 @enderror">
+                @error('due_date')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
         </div>
 
-        <!-- Status -->
-        <div class="mb-6">
-            <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
-            <select wire:model="status" id="status" 
-                class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('status') border-red-500 @enderror">
-                @foreach($statuses as $statusOption)
-                    <option value="{{ $statusOption->value }}">{{ $statusOption->label() }}</option>
-                @endforeach
-            </select>
-            @error('status')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
+        <!-- Status and Priority -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Status -->
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Statut</label>
+                <select wire:model="status" id="status" 
+                    class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('status') border-red-500 @enderror">
+                    @foreach($statuses as $statusOption)
+                        <option value="{{ $statusOption->value }}">{{ $statusOption->label() }}</option>
+                    @endforeach
+                </select>
+                @error('status')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
 
-        <!-- Priority -->
-        <div class="mb-6">
-            <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priorité</label>
-            <select wire:model="priority" id="priority" 
-                class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('priority') border-red-500 @enderror">
-                @foreach($priorities as $priorityOption)
-                    <option value="{{ $priorityOption->value }}">{{ $priorityOption->label() }}</option>
-                @endforeach
-            </select>
-            @error('priority')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
-        <!-- Due Date -->
-        <div class="mb-6">
-            <label for="due_date" class="block text-sm font-medium text-gray-700 mb-2">Date d'échéance (Optionnel)</label>
-            <input type="date" wire:model="due_date" id="due_date" 
-                class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('due_date') border-red-500 @enderror">
-            @error('due_date')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
+            <!-- Priority -->
+            <div>
+                <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priorité</label>
+                <select wire:model="priority" id="priority" 
+                    class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary @error('priority') border-red-500 @enderror">
+                    @foreach($priorities as $priorityOption)
+                        <option value="{{ $priorityOption->value }}">{{ $priorityOption->label() }}</option>
+                    @endforeach
+                </select>
+                @error('priority')
+                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
         </div>
 
         <!-- Buttons -->
