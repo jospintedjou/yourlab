@@ -1,4 +1,5 @@
-<div>
+<div class="bg-white rounded-lg shadow-md p-6">
+    <!-- Filters -->
     <div class="mb-6">
         <div class="flex gap-4 items-center">
             <div class="w-64 relative">
@@ -25,7 +26,8 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden">
+    <!-- Table -->
+    <div class="rounded-lg border border-gray-200 overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
                 <tr>
