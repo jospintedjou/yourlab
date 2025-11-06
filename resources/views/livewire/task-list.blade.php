@@ -10,24 +10,24 @@
                 <input 
                     type="text" 
                     wire:model.live.debounce.300ms="search" 
-                    placeholder="Search tasks..." 
+                    placeholder="Rechercher des tâches..." 
                     class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
             </div>
             <div class="w-40">
                 <select wire:model.live="statusFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Status</option>
-                    <option value="todo">To Do</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="done">Done</option>
+                    <option value="">Tous les statuts</option>
+                    <option value="todo">À faire</option>
+                    <option value="in_progress">En cours</option>
+                    <option value="done">Terminée</option>
                 </select>
             </div>
             <div class="w-40">
                 <select wire:model.live="priorityFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Priority</option>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value="">Toutes priorités</option>
+                    <option value="low">Basse</option>
+                    <option value="medium">Moyenne</option>
+                    <option value="high">Haute</option>
                 </select>
             </div>
         </div>
@@ -38,19 +38,19 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th wire:click="sortBy('title')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100">
-                        Task Title
+                        Titre de la tâche
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Project
+                        Projet
                     </th>
                     <th wire:click="sortBy('status')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100">
-                        Status
+                        Statut
                     </th>
                     <th wire:click="sortBy('priority')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100">
-                        Priority
+                        Priorité
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Due Date
+                        Échéance
                     </th>
                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                         Actions
@@ -77,32 +77,18 @@
                             {{ $task->project->name ?? 'N/A' }}
                         </td>
                         <td class="px-6 py-4">
-                            @if($task->status === 'done')
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                    Done
-                                </span>
-                            @elseif($task->status === 'in_progress')
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                                    In Progress
-                                </span>
-                            @else
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                    To Do
-                                </span>
-                            @endif
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-{{ $task->status->color() }}-100 text-{{ $task->status->color() }}-800">
+                                {{ $task->status->label() }}
+                            </span>
                         </td>
                         <td class="px-6 py-4">
-                            @if($task->priority === 'high')
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">
-                                    High
-                                </span>
-                            @elseif($task->priority === 'medium')
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                    Medium
+                            @if($task->priority)
+                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-{{ $task->priority->color() }}-100 text-{{ $task->priority->color() }}-800">
+                                    {{ $task->priority->label() }}
                                 </span>
                             @else
                                 <span class="px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                    Low
+                                    -
                                 </span>
                             @endif
                         </td>
@@ -115,13 +101,13 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex items-center justify-end gap-2">
-                                <a href="{{ route('tenant.tasks.show', ['tenant' => $tenantId, 'task' => $task->id]) }}" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition" title="View">
+                                <a href="{{ route('tenant.tasks.show', ['tenant' => $tenantId, 'task' => $task->id]) }}" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition" title="Voir">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
                                 </a>
-                                <a href="{{ route('tenant.tasks.edit', ['tenant' => $tenantId, 'task' => $task->id]) }}" class="p-1.5 text-green-600 hover:bg-green-50 rounded transition" title="Edit">
+                                <a href="{{ route('tenant.tasks.edit', ['tenant' => $tenantId, 'task' => $task->id]) }}" class="p-1.5 text-green-600 hover:bg-green-50 rounded transition" title="Modifier">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
@@ -137,7 +123,7 @@
                 @empty
                     <tr>
                         <td colspan="6" class="px-6 py-12 text-center text-gray-500">
-                            No tasks found
+                            Aucune tâche trouvée
                         </td>
                     </tr>
                 @endforelse

@@ -10,16 +10,16 @@
                 <input 
                     type="text" 
                     wire:model.live.debounce.300ms="search" 
-                    placeholder="Search projects..." 
+                    placeholder="Rechercher des projets..." 
                     class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
             </div>
             <div class="w-48">
                 <select wire:model.live="statusFilter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Status</option>
-                    <option value="draft">Draft</option>
-                    <option value="active">Active</option>
-                    <option value="completed">Completed</option>
+                    <option value="">Tous les statuts</option>
+                    <option value="draft">Brouillon</option>
+                    <option value="active">Actif</option>
+                    <option value="completed">Terminé</option>
                 </select>
             </div>
         </div>
@@ -30,19 +30,19 @@
             <thead class="bg-gray-50">
                 <tr>
                     <th wire:click="sortBy('name')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100">
-                        Project Name
+                        Nom du projet
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                         Description
                     </th>
                     <th wire:click="sortBy('status')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100">
-                        Status
+                        Statut
                     </th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                        Tasks
+                        Tâches
                     </th>
                     <th wire:click="sortBy('created_at')" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase cursor-pointer hover:bg-gray-100">
-                        Created
+                        Créé le
                     </th>
                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                         Actions
@@ -64,19 +64,9 @@
                             {{ Str::limit($project->description ?? 'No description', 50) }}
                         </td>
                         <td class="px-6 py-4">
-                            @if($project->status === 'active')
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            @elseif($project->status === 'completed')
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
-                                    Completed
-                                </span>
-                            @else
-                                <span class="px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
-                                    Draft
-                                </span>
-                            @endif
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full bg-{{ $project->status->color() }}-100 text-{{ $project->status->color() }}-800">
+                                {{ $project->status->label() }}
+                            </span>
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-600">
                             {{ $project->tasks_count }}
@@ -86,13 +76,13 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <div class="flex items-center justify-end gap-2">
-                                <a href="{{ route('tenant.projects.show', ['tenant' => $tenantId, 'project' => $project->id]) }}" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition" title="View">
+                                <a href="{{ route('tenant.projects.show', ['tenant' => $tenantId, 'project' => $project->id]) }}" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition" title="Voir">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
                                 </a>
-                                <a href="{{ route('tenant.projects.edit', ['tenant' => $tenantId, 'project' => $project->id]) }}" class="p-1.5 text-green-600 hover:bg-green-50 rounded transition" title="Edit">
+                                <a href="{{ route('tenant.projects.edit', ['tenant' => $tenantId, 'project' => $project->id]) }}" class="p-1.5 text-green-600 hover:bg-green-50 rounded transition" title="Modifier">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
@@ -102,14 +92,13 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                     </svg>
                                 </button>
-                                </button>
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
                         <td colspan="6" class="px-6 py-12 text-center text-gray-500">
-                            No projects found
+                            Aucun projet trouvé
                         </td>
                     </tr>
                 @endforelse

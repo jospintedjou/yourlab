@@ -11,9 +11,9 @@ enum ProjectStatus: string
     public function label(): string
     {
         return match($this) {
-            self::DRAFT => 'Draft',
-            self::ACTIVE => 'Active',
-            self::COMPLETED => 'Completed',
+            self::DRAFT => 'Brouillon',
+            self::ACTIVE => 'Actif',
+            self::COMPLETED => 'Terminé',
         };
     }
 
